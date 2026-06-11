@@ -1,0 +1,22 @@
+# Project default configuration.
+#
+# These values are the lowest-priority configuration layer. Environment
+# variables and the .env file override anything set here, so this file is a
+# safe place to keep version-controlled defaults for the whole team.
+#
+# Keys are flat and match the field names in app/core/config.py.
+
+# Qdrant vector database
+qdrant_url: http://qdrant:6333
+qdrant_collection: rag_scifact
+
+# Embedding model (free, local)
+embedding_model: BAAI/bge-small-en-v1.5
+
+# Chunking defaults
+chunk_size: 800
+chunk_overlap: 100
+chunking_strategy: recursive
+
+# Where raw documents are read from
+input_dir: ./data/raw
