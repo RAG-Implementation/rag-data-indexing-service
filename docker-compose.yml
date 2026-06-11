@@ -37,6 +37,16 @@ services:
       - PYTHONPATH=/app
     env_file:
       - .env
+    # ── GPU access (NVIDIA) ──────────────────────────────────────────────────
+    # Passes the host GPU into the container via the NVIDIA container runtime.
+    # Requires nvidia-container-toolkit installed in WSL2 (see README).
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   # ── Qdrant Vector Database ───────────────────────────────────────────────────
   qdrant:
@@ -69,6 +79,13 @@ services:
       - qdrant
     profiles:
       - api
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
 # ── Named volumes ────────────────────────────────────────────────────────────
 # Docker manages these volumes outside the project folder.
