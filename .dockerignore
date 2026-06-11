@@ -1,0 +1,64 @@
+# ── .dockerignore ─────────────────────────────────────────────────────────────
+# Files listed here are NOT sent to Docker when building the image.
+# This keeps the build context small and the image lean.
+# Note: the project folder is mounted as a volume at runtime anyway,
+# so excluding files here does not affect what you can access inside the container.
+
+# Git
+.git
+.gitignore
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets — never bake these into the image
+.env
+.env.*
+!.env.example
+
+# Test and lint caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Local data — large binary files that do not belong in the image
+data/raw/
+data/processed/
+data/cache/
+
+# Model weights — too large for the image
+models/
+*.pt
+*.bin
+*.onnx
+*.safetensors
+
+# Qdrant local storage
+qdrant_storage/
+.qdrant/
+
+# OS noise
+.DS_Store
+Thumbs.db
+*Zone.Identifier
+
+# Docs and markdown — not needed at runtime
+docs/
+README.md
+*.md
