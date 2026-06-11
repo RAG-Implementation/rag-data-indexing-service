@@ -1,3 +1,7 @@
+<div align="center">
+    <img src="image/banner.png" alt="banner" width="50%">
+</div>
+
 <h1 align="center">RAG Data Indexing Service</h1>
 
 <p align="center">
