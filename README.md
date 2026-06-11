@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="image/banner.png" alt="banner" width="50%">
+    <img src="image/banner.png" alt="banner" width="100%">
 </div>
 
 <h1 align="center">RAG Data Indexing Service</h1>
