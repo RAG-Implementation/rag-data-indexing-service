@@ -15,9 +15,9 @@ Application-wide infrastructure shared by every part of the service. This packag
 
 **Purpose:** Single source of truth for all runtime configuration.
 
-Defines a `Settings` class backed by `pydantic-settings`. Every setting maps directly to an environment variable (e.g., `qdrant_url` reads from `QDRANT_URL`). Settings can also be loaded from a `.env` file.
+Defines a `Settings` class backed by `pydantic-settings`. Every setting maps directly to an environment variable (e.g., `qdrant_url` reads from `QDRANT_URL`). Settings are resolved from three layers, highest priority first: environment variables, the `.env` file, then `config/pipeline.yaml`. Environment variables and `.env` always override the YAML file.
 
-The `get_settings()` function returns a cached singleton so the `.env` file is parsed only once per process. Every module in the app imports settings through `get_settings()`.
+The `get_settings()` function returns a cached singleton so the configuration files are parsed only once per process. Every module in the app imports settings through `get_settings()`.
 
 **Settings defined:**
 
