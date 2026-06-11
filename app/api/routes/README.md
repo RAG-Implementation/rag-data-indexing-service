@@ -72,6 +72,7 @@ Returns HTTP 400 if the `input_dir` does not exist.
   "collection_name": "rag_scifact",
   "exists": true,
   "vectors_count": 7042,
+  "indexed_documents": 5183,
   "vector_size": 384,
   "distance": "COSINE",
   "embedding_model": "BAAI/bge-small-en-v1.5",
