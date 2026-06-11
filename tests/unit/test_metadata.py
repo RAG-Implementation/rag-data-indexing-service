@@ -31,3 +31,29 @@ def test_enrich_chunks_has_all_required_fields_and_unique_ids():
 
     ids = [r["chunk_id"] for r in enriched]
     assert len(ids) == len(set(ids)), "chunk ids must be unique"
+
+
+def test_enrich_chunks_chapter_section_default_empty():
+    enriched = enrich_chunks(_sample_chunks())
+
+    for record in enriched:
+        assert record["chapter"] == "", "chapter defaults to empty for flat corpora"
+        assert record["section"] == "", "section defaults to empty for flat corpora"
+
+
+def test_enrich_chunks_carries_chapter_and_section():
+    chunks = [
+        {
+            "document_id": "doc1",
+            "chunk_index": 0,
+            "text": "intro",
+            "title": "T",
+            "source": "s",
+            "chapter": "Chapter 1",
+            "section": "1.2 Background",
+        }
+    ]
+    enriched = enrich_chunks(chunks)
+
+    assert enriched[0]["chapter"] == "Chapter 1"
+    assert enriched[0]["section"] == "1.2 Background"

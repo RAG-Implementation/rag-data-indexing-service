@@ -42,6 +42,8 @@ Tests for `app.pipeline.metadata`: `make_chunk_id` and `enrich_chunks`.
 | `test_make_chunk_id_is_stable` | The same inputs always produce the same chunk ID |
 | `test_make_chunk_id_differs_for_different_content` | Different `chunk_index` values produce different IDs |
 | `test_enrich_chunks_has_all_required_fields_and_unique_ids` | All required metadata fields are present and all chunk IDs are unique |
+| `test_enrich_chunks_chapter_section_default_empty` | `chapter`/`section` default to empty strings for flat corpora |
+| `test_enrich_chunks_carries_chapter_and_section` | `chapter`/`section` are carried through when provided on the source chunk |
 
 ### 1.4. test_embedding.py
 
