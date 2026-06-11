@@ -64,7 +64,8 @@ Returned by `GET /collections/{collection_name}/status`.
 |---|---|---|
 | `collection_name` | `str` | Name of the collection |
 | `exists` | `bool` | Whether the collection exists in Qdrant |
-| `vectors_count` | `int \| null` | Number of vectors stored |
+| `vectors_count` | `int \| null` | Number of vectors (chunks) stored |
+| `indexed_documents` | `int \| null` | Number of distinct source documents indexed |
 | `vector_size` | `int \| null` | Dimension of each vector (e.g., 384) |
 | `distance` | `str \| null` | Distance metric (e.g., `"COSINE"`) |
 | `embedding_model` | `str \| null` | Model that produced the vectors |

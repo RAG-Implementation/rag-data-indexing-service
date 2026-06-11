@@ -40,6 +40,7 @@ class StatusResponse(BaseModel):
     collection_name: str
     exists: bool
     vectors_count: int | None = None
+    indexed_documents: int | None = None
     vector_size: int | None = None
     distance: str | None = None
     embedding_model: str | None = None
