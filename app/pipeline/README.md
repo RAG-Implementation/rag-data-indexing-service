@@ -77,6 +77,8 @@ Enriches each raw chunk with the metadata fields needed for reliable retrieval:
 | `source_file` | File path of the original document |
 | `document_type` | Label for the document category |
 | `title` | Document title |
+| `chapter` | Optional chapter label (empty for flat corpora like SciFact) |
+| `section` | Optional section label (empty for flat corpora like SciFact) |
 | `created_at` | ISO 8601 UTC timestamp of the indexing run |
 | `text` | The chunk text itself |
 
