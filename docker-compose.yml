@@ -1,0 +1,79 @@
+# ── RAG Data Indexing Service — Docker Compose ────────────────────────────────
+#
+# Services:
+#   jupyter  — JupyterLab for running and editing notebooks (always on)
+#   qdrant   — Vector database for storing indexed chunks (always on)
+#   api      — FastAPI service (only starts with: docker compose --profile api up)
+#
+# Usage:
+#   make up            — build and start jupyter + qdrant
+#   make down          — stop and remove all containers
+#   make jupyter       — open a shell to the running jupyter container
+#   make download-data — run notebook 01 inside Docker to produce corpus.jsonl
+
+services:
+
+  # ── JupyterLab ──────────────────────────────────────────────────────────────
+  jupyter:
+    build: .
+    container_name: rag_jupyter
+    command: >
+      jupyter lab
+        --ip=0.0.0.0
+        --port=8888
+        --no-browser
+        --allow-root
+        --ServerApp.token=""
+        --ServerApp.password=""
+    ports:
+      - "8888:8888"
+    volumes:
+      # Mount the whole project so edits on the host appear inside the container
+      - .:/app
+      # Persist the Hugging Face dataset cache between container restarts.
+      # Without this, datasets re-download every time you recreate the container.
+      - huggingface_cache:/root/.cache/huggingface
+    environment:
+      - PYTHONPATH=/app
+    env_file:
+      - .env
+
+  # ── Qdrant Vector Database ───────────────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rag_qdrant
+    ports:
+      - "6333:6333"   # HTTP REST API  → http://localhost:6333
+      - "6334:6334"   # gRPC API
+    volumes:
+      # Persist vector index data between container restarts
+      - qdrant_storage:/qdrant/storage
+
+  # ── FastAPI Application ──────────────────────────────────────────────────────
+  # This service is behind a profile and will NOT start with a plain `make up`.
+  # Enable it once app/ is implemented: docker compose --profile api up
+  api:
+    build: .
+    container_name: rag_api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - QDRANT_URL=http://qdrant:6333
+    env_file:
+      - .env
+    depends_on:
+      - qdrant
+    profiles:
+      - api
+
+# ── Named volumes ────────────────────────────────────────────────────────────
+# Docker manages these volumes outside the project folder.
+# Data persists even after `docker compose down`.
+# Use `docker compose down -v` to also delete the volumes.
+volumes:
+  huggingface_cache:
+  qdrant_storage:
