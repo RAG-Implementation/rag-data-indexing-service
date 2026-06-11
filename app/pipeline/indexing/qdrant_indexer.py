@@ -87,6 +87,31 @@ class QdrantIndexer:
         """Return the exact number of points stored in the collection."""
         return self.client.count(collection_name=self.collection, exact=True).count
 
+    def count_documents(self, batch_size: int = 1000) -> int:
+        """Return the number of distinct source documents in the collection.
+
+        A collection stores one point per chunk, so several points can share the
+        same `document_id`. We scroll the payloads (vectors excluded to stay
+        light) and count the unique `document_id` values.
+        """
+        unique_ids: set[str] = set()
+        offset = None
+        while True:
+            points, offset = self.client.scroll(
+                collection_name=self.collection,
+                limit=batch_size,
+                offset=offset,
+                with_payload=["document_id"],
+                with_vectors=False,
+            )
+            for point in points:
+                document_id = (point.payload or {}).get("document_id")
+                if document_id is not None:
+                    unique_ids.add(document_id)
+            if offset is None:
+                break
+        return len(unique_ids)
+
     def exists(self) -> bool:
         """Return True if the collection exists."""
         return self.client.collection_exists(self.collection)
@@ -108,6 +133,7 @@ class QdrantIndexer:
             "collection_name": self.collection,
             "exists": True,
             "vectors_count": self.count(),
+            "indexed_documents": self.count_documents(),
             "vector_size": vector_params.size,
             "distance": vector_params.distance.name,
             "embedding_model": embedding_model,
