@@ -8,6 +8,7 @@ datasets
 
 # Data handling and exploration
 pandas
+numpy
 
 # Text cleaning (fixes mojibake / broken unicode)
 ftfy
