@@ -33,6 +33,7 @@ commit_deleted "chore: remove app/pipeline placeholder after pipeline modules ad
 commit_deleted "chore: remove data root placeholder after README added" data/.gitkeep
 commit_deleted "chore: remove docs placeholder after documentation added" docs/.gitkeep
 commit_deleted "chore: remove scripts placeholder after README added" scripts/.gitkeep
+commit_deleted "chore: remove temporary per-folder commit helper script" scripts/run_per_folder_commits.sh
 commit_deleted "chore: remove tests placeholder after test suite added" tests/.gitkeep
 
 echo "=== push ==="
