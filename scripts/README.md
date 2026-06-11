@@ -13,7 +13,6 @@ Reserved directory for standalone utility scripts. These are one-off or maintena
 | File | Purpose |
 |---|---|
 | `README.md` | This file — documents the scripts directory |
-| `make_commits.sh` | One-shot helper that creates separate git commits per folder or file (run locally when batch-committing staged work) |
 
 Day-to-day automation is handled through `Makefile` targets.
 
